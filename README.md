@@ -1,1 +1,3 @@
-# assignment3
+# Assignment 3
+
+Bearings and shaft accessories.
