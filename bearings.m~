@@ -19,7 +19,7 @@ Fe = 0.4*radialForce + KA * axialForce; % N, dynamic equivalent load. eq. 11-19
 % 
 
 
-xD = designLife * rotaitonalSpeed * 60/LR; % multiple of rating life
+xD = designLife*nD*60/LR; % multiple of rating life
 
 
 
