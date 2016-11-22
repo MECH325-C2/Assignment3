@@ -1,25 +1,30 @@
-function [ outputArguments ] = bearings( axialForce, radialForce, designLife, rotationalSpeed, K )
+%% Tapered roller bearing calculation
+clc, clear,
 
-%{
-Application-spesific variables:
-axialForce F_a [lbs]
-radialForce F_r [lbs]
+%% Application-spesific variables
 
-designLife L_D [revolutions]
-rotationalSpeed n_D [rev/min]
+F_rA = 56.8 * 4.45; % [N]
+F_rB = 99.8 * 4.45; % [N]
+F_ae = 25 * 4.45; % [N]
 
-Bearings-spesific variables:
-K_A - geometry factor,  initial guess is 1.5
-K_B ?
+R_D = 0.99; % reliability-factor
 
-%}
+designLife = 2.5*4*250*16; % [hours]
+rotationalSpeed = 120; % [rpm]
 
-% Constants 
-a = 10/3;   % for roller bearings in general
-V = 1;      % as inner race rotates
 applicationFactor = 3; % a_f (see table 11-5), ASSUMPTION of machinery with moderate impact
 
-% Values used by Timken manufacturer (see top of page 590)
+
+%% Constants 
+a = 10/3;   % for roller bearings in general
+V = 1;      % as inner race rotates
+
+ L_D = designLife * rotationalSpeed * 60;    % [revolutions] desiered life
+ L_R = 90*10^6;                              % [revolutions] rating life
+ x_D = L_D / L_R;    % dimensionaless multiple of rating life (for convenience)
+
+
+%% Values used by Timken manufacturer (see top of page 590)
 x_0 = 0;        % guaranteed life
 b = 3/2;        % shape parameter
 theta = 4.48;   % scale parameter
@@ -28,18 +33,39 @@ theta = 4.48;   % scale parameter
 %% Bearing calculations, using tapered roller bearings
 % See example 11-8
 
-% As this bearing is alone, it carries the net thrust load
-F_e = 0.4 * radialForce + K * axialForce;   % N, dynamic equivalent load. eq. 11-19
 
-L_D = designLife * rotationalSpeed * 60;    % [revolutions] desiered life
-L_R = 90*10^6;                              % [revolutions] rating life
+%% Bearings-spesific variables
+K_A = 1.5; % geometry factor for A, initial guess is 1.5
+K_B = 1.5; % geometry factor for B
 
-x_D = L_D / L_R;    % dimensionaless multiple of rating life (for convenience)
+R_DA = sqrt(R_D); % estimate R_D for each bearing
+R_DB = sqrt(R_D); % estimate R_D for each bearing
 
-R_D = 0.99;         % desiered reliability, ASSUMPTION
+while true
+    
+    F_iA = 0.47*F_rA/K_A;
+    F_iB = 0.47*F_rB/K_B;
+    
+    F_eA = 0.4*F_rA + K_A*(F_iB+F_ae);
+    F_eB = F_rB;
 
-C_10 = applicationFactor * F_e * (x_D/(x_0+(theta-x_0)*(1-R_D)^(1/b)))^(1/a); % eq 11-10, caltaloge entry C_10 should equal or exceed this value
+    % for bearing A
+    C_10 = applicationFactor * F_eA * (x_D/(x_0+(theta-x_0)*(1-R_DA)^(1/b)))^(1/a); % eq 11-10, caltaloge entry C_10 should equal or exceed this value
+    
+    display(['For A: C_10 = ' num2str(C_10)]);
+    K_Anew = input('New K = ');
+    
+    % for bearing B
+    C_10 = applicationFactor * F_eB * (x_D/(x_0+(theta-x_0)*(1-R_DB)^(1/b)))^(1/a); % eq 11-10, caltaloge entry C_10 should equal or exceed this value
 
-display(C_10);
-
+    display(['For B: C_10 = ' num2str(C_10)]);
+    K_Bnew = input('New K = ');
+    
+    if (K_A == K_Anew && K_B == K_Bnew)
+        break;
+    else 
+        K_A=K_Anew;
+        K_B=K_Bnew;
+    end
 end
+
