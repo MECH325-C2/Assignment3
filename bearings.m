@@ -2,10 +2,10 @@ function [ outputArguments ] = bearings( axialForce, radialForce, designLife, ro
 
 %{
 Application-spesific variables:
-axialForce F_a
-radialForce F_r
+axialForce F_a [lbs]
+radialForce F_r [lbs]
 
-designLife L_D
+designLife L_D [revolutions]
 rotationalSpeed n_D [rev/min]
 
 Bearings-spesific variables:
@@ -15,8 +15,8 @@ K_B ?
 %}
 
 % Constants 
-a = 10/3; % for roller bearings in general
-V = 1 % as inner race rotates
+a = 10/3;   % for roller bearings in general
+V = 1;      % as inner race rotates
 applicationFactor = 3; % a_f (see table 11-5), ASSUMPTION of machinery with moderate impact
 
 % Values used by Timken manufacturer (see top of page 590)
@@ -25,21 +25,18 @@ b = 3/2;        % shape parameter
 theta = 4.48;   % scale parameter
 
 
-
 %% Bearing calculations, using tapered roller bearings
 % See example 11-8
 
 % As this bearing is alone, it carries the net thrust load
 F_e = 0.4 * radialForce + K * axialForce;   % N, dynamic equivalent load. eq. 11-19
 
-L_D = designLife * rotationalSpeed * 60;    % 
-L_R = 90*10^6;                              % 
+L_D = designLife * rotationalSpeed * 60;    % [revolutions] desiered life
+L_R = 90*10^6;                              % [revolutions] rating life
 
-x_D = L_D / L_R;    % multiple of rating life
+x_D = L_D / L_R;    % dimensionaless multiple of rating life (for convenience)
 
-R_D = sqrt(0.99);   % estimated for each bearing
-
-
+R_D = 0.99;         % desiered reliability, ASSUMPTION
 
 C_10 = applicationFactor * F_e * (x_D/(x_0+(theta-x_0)*(1-R_D)^(1/b)))^(1/a); % eq 11-10, caltaloge entry C_10 should equal or exceed this value
 
