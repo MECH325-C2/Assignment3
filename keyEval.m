@@ -4,9 +4,9 @@ h = 3/8; %height, inches
 
 F = 2*467/1.5; %force, lbf
 nf = 2;
-Sy = 24000;
+Sy = 24000; %G10060
 rectKeyCalc(F, w, h, Sy, nf)
-retRingCalc(25,1.5, 24000, 3)
+retRingCalc(1.5,0.5/25.4,0.75/25.4, 24000, 77000, 3)
 end
 
 function l = rectKeyCalc(F, w,h,Sy,nf)
@@ -34,8 +34,20 @@ l = max(Ls,Lc);
 
 end
 
-function d = retRingCalc(Pmax, D, Sy,n)
-%Calculates ring thickness given 
-d = n*Pmax/(pi*D*0.577*Sy)
+function  t= retRingCalc(D, d, t, Sy_r,Sy_s,n)
+%Calculates maximum axial load before ring/groove failure.
+
+%params: 
+%   D=shaft diameter (in)
+%   d=groove depth (in)
+%   t = ring width (in)
+%   Sy_r = ring yield strength
+%   Sy_s = shaft yield strength
+%   n = safety factor
+
+%t1 = n*Pmax/(pi*D*0.577*Sy);
+Pmaxr = (1/n)*.577*Sy_r*pi*D*t;
+Pmaxg = (1/n)*Sy_s*pi*D*d;
+t = max(Pmaxr,Pmaxg);
 
 end
