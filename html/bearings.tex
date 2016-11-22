@@ -1,0 +1,201 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    
+\subsection*{Contents}
+
+\begin{itemize}
+\setlength{\itemsep}{-1ex}
+   \item Tapered roller bearing calculation
+   \item Application-spesific variables
+   \item Constants
+   \item Values used by Timken manufacturer (see top of page 590)
+   \item Bearing calculations, using tapered roller bearings
+   \item Bearings-spesific variables
+\end{itemize}
+
+
+\subsection*{Tapered roller bearing calculation}
+
+\begin{verbatim}
+clc, clear,
+\end{verbatim}
+
+
+\subsection*{Application-spesific variables}
+
+\begin{verbatim}
+F_rA = 56.8 * 4.45 * 2.5 % [N]
+F_rB = 99.8 * 4.45 * 2.5 % [N]
+F_ae = 25 * 4.45 * 2.5 % [N]
+
+R_D = 0.99; % reliability-factor
+
+designLife = 2.5*4*250*16 % [hours]
+rotationalSpeed = 120; % [rpm]
+
+applicationFactor = 3; % a_f (see table 11-5), ASSUMPTION of machinery with moderate impact
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}
+F_rA =
+
+  631.9000
+
+
+F_rB =
+
+   1.1103e+03
+
+
+F_ae =
+
+  278.1250
+
+
+designLife =
+
+       40000
+
+\end{verbatim} \color{black}
+    
+
+\subsection*{Constants}
+
+\begin{verbatim}
+a = 10/3;   % for roller bearings in general
+V = 1;      % as inner race rotates
+
+ L_D = designLife * rotationalSpeed * 60    % [revolutions] desiered life
+ L_R = 90*10^6;                              % [revolutions] rating life
+ x_D = L_D / L_R    % dimensionaless multiple of rating life (for convenience)
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}
+L_D =
+
+   288000000
+
+
+x_D =
+
+    3.2000
+
+\end{verbatim} \color{black}
+    
+
+\subsection*{Values used by Timken manufacturer (see top of page 590)}
+
+\begin{verbatim}
+x_0 = 0;        % guaranteed life
+b = 3/2;        % shape parameter
+theta = 4.48;   % scale parameter
+\end{verbatim}
+
+
+\subsection*{Bearing calculations, using tapered roller bearings}
+
+\begin{par}
+See example 11-8
+\end{par} \vspace{1em}
+
+
+\subsection*{Bearings-spesific variables}
+
+\begin{verbatim}
+K_A = 1.5; % geometry factor for A, initial guess is 1.5
+K_B = 1.5; % geometry factor for B
+
+R_DA = sqrt(R_D) % estimate R_D for each bearing
+R_DB = sqrt(R_D) % estimate R_D for each bearing
+
+while true
+
+    F_iA = 0.47*F_rA/K_A
+    F_iB = 0.47*F_rB/K_B
+
+    F_eA = 0.4*F_rA + K_A*(F_iB+F_ae)
+    F_eB = F_rB
+
+    % for bearing A
+    C_10 = applicationFactor * F_eA * (x_D/(x_0+(theta-x_0)*(1-R_DA)^(1/b)))^(1/a) % eq 11-10, caltaloge entry C_10 should equal or exceed this value
+
+    display(['For A: C_10 = ' num2str(C_10)]);
+    K_Anew = input('New K = ');
+
+    % for bearing B
+    C_10 = applicationFactor * F_eB * (x_D/(x_0+(theta-x_0)*(1-R_DB)^(1/b)))^(1/a) % eq 11-10, caltaloge entry C_10 should equal or exceed this value
+
+    display(['For B: C_10 = ' num2str(C_10)]);
+    K_Bnew = input('New K = ');
+
+    if (K_A == K_Anew && K_B == K_Bnew)
+        break;
+    else
+        K_A=K_Anew;
+        K_B=K_Bnew;
+    end
+end
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}
+R_DA =
+
+    0.9950
+
+
+R_DB =
+
+    0.9950
+
+
+F_iA =
+
+  197.9953
+
+
+F_iB =
+
+  347.8862
+
+
+F_eA =
+
+   1.1918e+03
+
+
+F_eB =
+
+   1.1103e+03
+
+
+C_10 =
+
+   9.3211e+03
+
+For A: C_10 = 9321.0703
+\end{verbatim} \color{black}
+    
+        \color{lightgray} \begin{verbatim}Error using input
+Cannot call INPUT from EVALC.
+
+Error in bearings (line 56)
+    K_Anew = input('New K = ');
+\end{verbatim} \color{black}
+    
+
+
+\end{document}
+    
