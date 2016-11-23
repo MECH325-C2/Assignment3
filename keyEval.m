@@ -2,11 +2,17 @@ function keyEval()
 w=  3/8; %width, inches
 h = 3/8; %height, inches
 
-F = 2*467/1.5; %force, lbf
+
 nf = 2;
 Sy = 24000; %G10060
-rectKeyCalc(F, w, h, Sy, nf)
-retRingCalc(1.5,0.5/25.4,0.75/25.4, 24000, 77000, 3)
+%% drum shaft
+Fd = 2*525.3/1.5; %force, lbf
+rectKeyCalc(Fd, w, h, Sy, nf)
+retRingCalc(1.5,0.2/25.4,0.5/25.4, 24000, 77000, 3)
+
+%% motor shaft
+Fm = 2 * 52.68 / 1.5;
+rectKeyCalc(Fm, w, h, Sy, nf)
 end
 
 function l = rectKeyCalc(F, w,h,Sy,nf)
@@ -48,6 +54,6 @@ function  t= retRingCalc(D, d, t, Sy_r,Sy_s,n)
 %t1 = n*Pmax/(pi*D*0.577*Sy);
 Pmaxr = (1/n)*.577*Sy_r*pi*D*t;
 Pmaxg = (1/n)*Sy_s*pi*D*d;
-t = max(Pmaxr,Pmaxg);
+t = min(Pmaxr,Pmaxg);
 
 end
