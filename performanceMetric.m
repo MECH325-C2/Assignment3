@@ -13,8 +13,9 @@ volume = pi*diameter^2/4 * length; % [m^3] total shaft volume
 weight = volume * spesificWeight; % [kg] total mass of shafts
 shaftCost = 15 * weight; % [$] total cost of shafts
 
-%% Shaft machining
+cost = cost + shaftCost;
 
+%% Shaft machining
 
 %% Shaft splines
 
@@ -23,8 +24,15 @@ shaftCost = 15 * weight; % [$] total cost of shafts
 %% Retaining ring grooves 
 
 %% Bearings and shaft collars
+boreDiameter = 15; % [mm] bore diameter of bearings
+bearingPricePerUnit = 20 + 2*(boreDiameter - 10); % cost per bearing
+bearingPrice = 2 * bearingPricePerUnit; % total cost of 2 bearings
+
+cost = cost + bearingPrice;
 
 %% Minor components (not contributing to cost)
 
 %% Bolts
 
+%% Total cost
+print(sum);
