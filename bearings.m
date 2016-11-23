@@ -3,8 +3,8 @@ clc, clear,
 
 %% Application-spesific variables
 
-F_rA = 169.4 * 4.45 * 2.5; % [N]
-F_rB = 299.3 * 4.45 * 2.5; % [N]
+F_rA = 201.4 * 4.45 * 2.5; % [N]
+F_rB = 331.3 * 4.45 * 2.5; % [N]
 F_ae = 75 * 4.45 * 2.5; % [N]
 
 R_D = 0.95; % reliability-factor
@@ -19,9 +19,9 @@ applicationFactor = 3; % a_f (see table 11-5), ASSUMPTION of machinery with mode
 a = 10/3;   % for roller bearings in general
 V = 1;      % as inner race rotates
 
- L_D = designLife * rotationalSpeed * 60;    % [revolutions] desiered life
- L_R = 90*10^6;                              % [revolutions] rating life
- x_D = L_D / L_R;    % dimensionaless multiple of rating life (for convenience)
+L_D = designLife * rotationalSpeed * 60;    % [revolutions] desiered life
+L_R = 90*10^6;                              % [revolutions] rating life
+x_D = L_D / L_R;                            % dimensionaless multiple of rating life (for convenience)
 
 
 %% Values used by Timken manufacturer (see top of page 590)
