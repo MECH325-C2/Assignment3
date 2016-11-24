@@ -1,0 +1,178 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    
+\subsection*{Contents}
+
+\begin{itemize}
+\setlength{\itemsep}{-1ex}
+   \item Performance metric
+   \item Stock shaft
+   \item Shaft machining
+   \item Shaft splines
+   \item Keyways
+   \item Retaining ring grooves
+   \item Bearings and shaft collars
+   \item Minor components (not contributing to cost)
+   \item Bolts
+   \item Total cost
+\end{itemize}
+
+
+\subsection*{Performance metric}
+
+\begin{par}
+The performance metric is caclated based on all selected components as spesified in the assingment.
+\end{par} \vspace{1em}
+\begin{verbatim}
+cost = 0;
+\end{verbatim}
+
+
+\subsection*{Stock shaft}
+
+\begin{verbatim}
+spesificWeight = 7.87e3; % [kg/m^3] spesific weight of stainless steel
+
+diameter = 37e-3; % [m] diameter of shafts
+length = 12 * 25.4e-3 ; % [m] length of shaft drum+middle+motor in inches
+volume = pi*diameter^2/4 * length; % [m^3] total shaft volume
+shaftWeight = volume * spesificWeight; % [kg] total mass of shafts
+costShaft = 15 * shaftWeight % [$] total cost of shafts
+
+cost = cost + costShaft;
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}
+costShaft =
+
+   38.6878
+
+\end{verbatim} \color{black}
+    
+
+\subsection*{Shaft machining}
+
+\begin{verbatim}
+lengthRemoved = (1+1) * 25.4e-3; % [m]
+outerDiameter = 37e-3; % [m] diameter of shafts
+innerDiameter = 25e-3; % [m] diameter of bearings
+
+removedVolume = pi * (outerDiameter^2 - innerDiameter^2)/4 * lengthRemoved; % [m^3] total volume of shaft to be removed
+machiningWeight = removedVolume * spesificWeight; % [kg] total weight of material to be machined
+costMachining = 75 * machiningWeight
+
+cost = cost + costMachining;
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}
+costMachining =
+
+   17.5211
+
+\end{verbatim} \color{black}
+    
+
+\subsection*{Shaft splines}
+
+\begin{par}
+Not used
+\end{par} \vspace{1em}
+
+
+\subsection*{Keyways}
+
+\begin{verbatim}
+keywayLength = 0.28 * 7.112e-3; % [m]
+costKeyway = 15+0.5*keywayLength % total cost of machining keyways
+
+cost = cost + costKeyway;
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}
+costKeyway =
+
+   15.0010
+
+\end{verbatim} \color{black}
+    
+
+\subsection*{Retaining ring grooves}
+
+\begin{verbatim}
+costGrove = 10 + 0.5 * (innerDiameter - 10e-3) % total cost of machining groves
+
+cost = cost + costGrove;
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}
+costGrove =
+
+   10.0075
+
+\end{verbatim} \color{black}
+    
+
+\subsection*{Bearings and shaft collars}
+
+\begin{verbatim}
+boreDiameter = 25; % [mm] bore diameter of bearings
+bearingPricePerUnit = 20 + 2*(boreDiameter - 10); % cost per bearing
+costBearings = 2 * bearingPricePerUnit % total cost of 2 bearings
+
+cost = cost + costBearings;
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}
+costBearings =
+
+   100
+
+\end{verbatim} \color{black}
+    
+
+\subsection*{Minor components (not contributing to cost)}
+
+
+
+\subsection*{Bolts}
+
+\begin{verbatim}
+costBolts = 4 * (5 - 4) % total cost of four bolts
+
+cost = cost + costBolts;
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}
+costBolts =
+
+     4
+
+\end{verbatim} \color{black}
+    
+
+\subsection*{Total cost}
+
+\begin{verbatim}
+display(['Total cost: ' num2str(cost)]);
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}Total cost: 185.2175
+\end{verbatim} \color{black}
+    
+
+
+\end{document}
+    

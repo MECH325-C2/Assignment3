@@ -8,7 +8,7 @@ cost = 0;
 spesificWeight = 7.87e3; % [kg/m^3] spesific weight of stainless steel
 
 diameter = 37e-3; % [m] diameter of shafts
-length = (12 + 2 + 2) * 25.4e-3 ; % [m] length of shaft drum+middle+motor in inches
+length = 12 * 25.4e-3 ; % [m] length of shaft drum+middle+motor in inches
 volume = pi*diameter^2/4 * length; % [m^3] total shaft volume
 shaftWeight = volume * spesificWeight; % [kg] total mass of shafts
 costShaft = 15 * shaftWeight % [$] total cost of shafts
@@ -36,12 +36,13 @@ costKeyway = 15+0.5*keywayLength % total cost of machining keyways
 cost = cost + costKeyway;
 
 %% Retaining ring grooves 
-costGrove = 10 + 0.5 * (innerDiameter - 10e-3) % total cost of machining groves
+perGroveCost = 10 + 0.5 * (innerDiameter - 10e-3);
+costGrove = 2*perGroveCost % total cost of machining groves
 
 cost = cost + costGrove;
 
 %% Bearings and shaft collars
-boreDiameter = 15; % [mm] bore diameter of bearings
+boreDiameter = 25; % [mm] bore diameter of bearings
 bearingPricePerUnit = 20 + 2*(boreDiameter - 10); % cost per bearing
 costBearings = 2 * bearingPricePerUnit % total cost of 2 bearings
 
