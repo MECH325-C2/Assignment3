@@ -3,8 +3,8 @@ clc, clear,
 
 %% Application-spesific variables
 
-F_rA = 201.4 * 4.45 * 2.5; % [N]
-F_rB = 331.3 * 4.45 * 2.5; % [N]
+F_rA = 183.0 * 4.45 * 2.5; % [N]
+F_rB = 319.8 * 4.45 * 2.5; % [N]
 F_ae = 75 * 4.45 * 2.5; % [N]
 
 R_D = 0.95; % reliability-factor
